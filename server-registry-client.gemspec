@@ -13,8 +13,10 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "server-registry-client"
   gem.require_paths = ["lib"]
-  gem.version       = ServerRegistry::Client::VERSION
+  gem.version       = ServerRegistryClient::VERSION
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
+
+  gem.add_runtime_dependency 'typhoeus', '0.5.3'
 end
