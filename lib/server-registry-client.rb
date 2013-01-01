@@ -1,2 +1,5 @@
 require "server-registry-client/version"
+require "server-registry-client/errors"
 require "server-registry-client/client"
+require "server-registry-client/server_processor"
+require "server-registry-client/models"

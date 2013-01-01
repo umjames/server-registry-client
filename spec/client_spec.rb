@@ -12,4 +12,5 @@ describe ServerRegistryClient::Client do
 			client = ServerRegistryClient::Client.new("peorfpoefm")
 		end.to raise_error
 	end
+	
 end
