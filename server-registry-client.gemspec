@@ -19,5 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
 
   gem.add_runtime_dependency 'typhoeus', '0.5.3'
-  gem.add_runtime_dependency 'yajl-ruby', '~> 1.1.0'
+  gem.add_runtime_dependency 'yajl-ruby', '~> 1.1'
+  gem.add_runtime_dependency 'thor', '~> 0.16'
+  gem.add_runtime_dependency 'activesupport', '~> 3.2'
 end

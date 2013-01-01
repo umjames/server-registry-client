@@ -9,8 +9,6 @@ module ServerRegistryClient
 			attr_reader :last_response
 
 			def initialize(server_registry_url_root)
-				raise "You must provide a valid URL for the server registry server (#{server_registry_url_root})" unless url_is_valid?(server_registry_url_root)
-
 				@server_registry_url_root = server_registry_url_root
 				@hydra = ::Typhoeus::Hydra.new
 			end
@@ -18,12 +16,6 @@ module ServerRegistryClient
 			protected
 
 			attr_reader :hydra
-
-			def url_is_valid?(url)
-				http_regexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
-
-				return (url =~ http_regexp) == 0
-			end
 
 			def default_typhoeus_options
 				{

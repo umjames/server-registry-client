@@ -5,8 +5,12 @@ module ServerRegistryClient
 				super
 			end
 
+			def api_version
+				"v1"
+			end
+
 			def servers_in_category(category)
-				response_json = make_web_request("/v1/category/#{category}")
+				response_json = make_web_request("/api/#{api_version}/category/#{category}")
 
 				if response_json.nil? || last_response.response_code == 404
 					return []
@@ -17,13 +21,13 @@ module ServerRegistryClient
 				end
 			end
 
-			def add_server_to_category(server, category_name)
-				server_json_hash = server_to_json(server)
-				server_json_hash[:categories] = [category_name]
+			def add_server_to_categories(server, category_names)
+				server_json_hash = server_to_json_hash(server)
+				server_json_hash[:categories] = (category_names.kind_of?(Array) ? category_names : [category_names])
 
 				server_json = jsonify(server_json_hash)
 
-				make_web_request("/v1/servers", {
+				make_web_request("/api/#{api_version}/servers", {
 					:method => :post,
 					:body => server_json
 				}) do |response, response_body|
@@ -37,7 +41,7 @@ module ServerRegistryClient
 				server_name = server.hostname || server.ip_address
 				server_removed = true
 
-				make_web_request("/v1/category/#{category_name}/server/#{server_name}", {
+				make_web_request("/api/#{api_version}/category/#{category_name}/server/#{server_name}", {
 					:method => :delete
 				}) do |response, response_body|
 					unless response.success?

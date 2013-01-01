@@ -10,8 +10,8 @@ module ServerRegistryClient
 			return server_processor.servers_in_category(category)
 		end
 
-		def add_server_to_category(server, category_name)
-			return server_processor.add_server_to_category(server, category_name)
+		def add_server_to_categories(server, category_names)
+			return server_processor.add_server_to_categories(server, category_names)
 		end
 
 		def remove_server_from_category(server, category_name)
@@ -28,12 +28,6 @@ module ServerRegistryClient
 			raise "version number must be a number greater than zero" if version_number.to_i <= 0
 
 			self.server_processor = ServerRegistryClient::ServerProcessor.const_get("V#{version_number}".to_sym).new(server_registry_url)
-		end
-
-		def url_is_valid?(url)
-			http_regexp = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
-
-			return (url =~ http_regexp) == 0
 		end
 	end
 end
