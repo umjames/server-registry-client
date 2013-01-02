@@ -7,6 +7,7 @@ module ServerRegistryClient
 		class Base
 			attr_reader :server_registry_url_root
 			attr_reader :last_response
+			attr_reader :api_version
 
 			def initialize(server_registry_url_root)
 				@server_registry_url_root = server_registry_url_root
@@ -16,6 +17,7 @@ module ServerRegistryClient
 			protected
 
 			attr_reader :hydra
+			attr_writer :api_version
 
 			def default_typhoeus_options
 				{
@@ -33,7 +35,7 @@ module ServerRegistryClient
 					if response.timed_out?
 						raise ServerRegistryClient::ServerCommunicationError, "Request to #{request.url} timed out"
 					elsif response.success?
-						if response.headers["Content-Type"] == "application/json"
+						if response.headers["Content-Type"].include?("application/json")
 							response_body = parse_json(response.body)
 						else
 							response_body = response.body

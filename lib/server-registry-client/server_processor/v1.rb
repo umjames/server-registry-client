@@ -3,10 +3,7 @@ module ServerRegistryClient
 		class V1 < Base
 			def initialize(server_registry_url)
 				super
-			end
-
-			def api_version
-				"v1"
+				self.api_version = "v1"
 			end
 
 			def servers_in_category(category)
@@ -18,6 +15,14 @@ module ServerRegistryClient
 					return response_json[:servers].map do |server_json|
 						server_from_json(server_json)
 					end
+				end
+			end
+
+			def get_all_servers
+				response_json = make_web_request("/api/#{api_version}/servers")
+					
+				return response_json.map do |server_json|
+					server_from_json(server_json)
 				end
 			end
 
@@ -50,6 +55,20 @@ module ServerRegistryClient
 				end
 
 				return server_removed
+			end
+
+			def remove_servers_like(server_to_match)
+				all_servers = get_all_servers
+
+				servers_to_delete = all_servers.find_all do |server|
+					server_to_match.matches?(server)	
+				end
+
+				servers_to_delete.each do |server|
+					make_web_request("/api/#{api_version}/server/#{server.id}", {
+						:method => :delete
+					})
+				end
 			end
 
 			protected

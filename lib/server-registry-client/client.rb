@@ -18,6 +18,10 @@ module ServerRegistryClient
 			return server_processor.remove_server_from_category(server, category_name)
 		end
 
+		def remove_servers_like(server)
+			return server_processor.remove_servers_like(server)
+		end
+
 		def server_registry_url
 			return server_processor.server_registry_url_root
 		end
