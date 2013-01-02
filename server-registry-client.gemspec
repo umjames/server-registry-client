@@ -8,12 +8,15 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Client library and command-line tools for interacting with the server registry (https://github.com/umjames/server-registry)}
   gem.homepage      = ""
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.files         = `git ls-files`.split($\) - [".gitignore"]
+  gem.executables   = %w(srctool) #gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "server-registry-client"
   gem.require_paths = ["lib"]
   gem.version       = ServerRegistryClient::VERSION
+
+  gem.required_ruby_version = ">= 1.9.1"
+  gem.required_rubygems_version = ">= 1.8.5"
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
